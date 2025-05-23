@@ -1,0 +1,11 @@
+venv/
+compressed_results/
+compressed_results_500kb/
+test_images/
+testjp2000/
+testjpeg/
+testjxl/
+train_images/
+trainjpeg/
+trainjp2000/
+trainjxl/
