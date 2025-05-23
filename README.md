@@ -12,19 +12,6 @@ Supports JPEG, PNG, JPEG2000 (.jp2), and JPEG XL (.jxl) image formats.
 
 Automatic validation and evaluation using a confusion matrix.
 
-## Folder Structure
-
-project/
-├── trainjxl/        # Folder containing subfolders, one per camera
-│   ├── camera_A/
-│   └── camera_B/
-├── testjxl/         # Similar structure for test images
-│   ├── camera_A/
-│   └── camera_B/
-└── identify.py      # Main script
-Each subfolder should contain images from a specific camera.
-
-
 ## Output
 Prints per-image predictions with matching scores.
 
