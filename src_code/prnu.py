@@ -114,7 +114,7 @@ def validate_on_test_set(test_folder, fingerprints):
                 #test_image = cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
                 #test_image = pyjxl.decode(file_path)
                 test_image = Image.open(file_path)
-                test_image = np.array(img)  # Convert to NumPy array for further use
+                test_image = np.array(test_image)  # Convert to NumPy array for further use
                 test_image = test_image.astype(np.float32) / 255.0  # Normalize to [0, 1]
 
                 # Match to camera
@@ -134,8 +134,8 @@ def validate_on_test_set(test_folder, fingerprints):
 
 if __name__ == "__main__":
     # Path to train and test folders
-    train_root = "trainjxl" 
-    test_root =  "testjxl" 
+    train_root = "trainjp2500kb" 
+    test_root =  "testjp2500kb" 
 
     # Build fingerprints
     camera_fingerprints = build_camera_fingerprints(train_root)

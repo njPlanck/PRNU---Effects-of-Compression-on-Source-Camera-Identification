@@ -9,3 +9,7 @@ train_images/
 trainjpeg/
 trainjp2000/
 trainjxl/
+trainjp2500kb/
+testjp2500kb/
+trainjpeg500kb/
+testjpeg500kb/

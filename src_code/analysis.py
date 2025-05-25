@@ -47,7 +47,7 @@ from scipy.interpolate import make_interp_spline
 from pathlib import Path
 
 # Path-safe and OS-agnostic
-csv_data = Path("compressed_results") / "train_images" / "D36" / "D36_metrics.csv"
+csv_data = Path("compressed_results_500kb") / "train_images" / "D36" / "D36_metrics.csv"
 df = pd.read_csv(csv_data)
 
 sns.set(style="whitegrid")
