@@ -8,11 +8,52 @@ import matplotlib.pyplot as plt
 import imagecodecs
 import cv2
 import pyjxl
+#import pillow_jxl
 from PIL import Image
-# --- Step 1: Extract PRNU noise ---
+from numba import njit
+
+
+
+# sigma filter to remove nnoise from the scene
+@njit
+def sigma_filter(img, window_size=3, sigma=0.03):
+    pad = window_size // 2
+    h, w = img.shape
+    out = np.zeros_like(img)
+    for y in range(pad, h - pad):
+        for x in range(pad, w - pad):
+            sum_val = 0.0
+            count = 0
+            center = img[y, x]
+            for dy in range(-pad, pad + 1):
+                for dx in range(-pad, pad + 1):
+                    ny, nx = y + dy, x + dx
+                    val = img[ny, nx]
+                    if abs(val - center) <= sigma:
+                        sum_val += val
+                        count += 1
+            if count > 0:
+                out[y, x] = sum_val / count
+            else:
+                out[y, x] = center
+    return out
+
+#normalise the residual
+
+def normalize_image(img):
+    img = img.astype(np.float64)
+    img_min, img_max = np.min(img), np.max(img)
+    return (img - img_min) / (img_max - img_min + 1e-8)
+
+
+# Extract PRNU noise
 def extract_noise(img):
     denoised = restoration.denoise_wavelet(img, method='BayesShrink', rescale_sigma=True)
-    return img - denoised
+    residual = img - denoised
+    residual = sigma_filter(residual)
+    residual = normalize_image(residual)
+    return residual
+
 
 # --- Step 2: Compute average fingerprint for a camera ---
 def get_camera_fingerprint(images):
@@ -31,10 +72,22 @@ def load_images_from_folder(folder_path):
             #img = io.imread(os.path.join(folder_path, filename), as_gray=True) / 255.0      #jpeg
             #img = cv2.imread(os.path.join(folder_path, filename), cv2.IMREAD_GRAYSCALE)
             #img = img.astype(np.float32) / 255.0  # Normalize to [0, 1]
-            img = Image.open(os.path.join(folder_path, filename))
+            img = Image.open(os.path.join(folder_path, filename)).convert("L")  # 'L' mode = grayscale
             img = np.array(img)  # Convert to NumPy array for further use
             img = img.astype(np.float32) / 255.0  # Normalize if needed
-            images.append(img)
+        else:
+            with open(os.path.join(folder_path, filename), 'rb') as f:
+                img = f.read()
+                img = imagecodecs.jpegxr_decode(img)
+                img = np.array(img)  # Convert to NumPy array for further use
+                img = img.astype(np.float32) / 255.0  # Normalize if needed
+                if img.ndim == 3 and img.shape[2] in [3,4]:
+                    # Convert RGB to grayscale (luminance)
+                    # # Using standard weights: 0.299 R + 0.587 G + 0.114 B
+                    img = np.dot(img[...,:3], [0.299, 0.587, 0.114]).astype(np.float32)
+                else:
+                    img = img  # Already single channel
+        images.append(img)
     return images
 
     
@@ -55,29 +108,6 @@ def build_camera_fingerprints(root_folder):
                 print(f"[WARN] No images found for {camera_name}. Skipping.")
     return fingerprints
 
-'''
-# --- Step 5: Match a test image to the best camera ---
-def match_camera(test_img, fingerprints):
-    test_noise = extract_noise(test_img)
-    test_norm = (test_noise - test_noise.mean()) / test_noise.std()  # Normalize once
-
-    best_match = None
-    best_score = -np.inf
-
-    for name, fingerprint in fingerprints.items():
-        ref_norm = (fingerprint - fingerprint.mean()) / fingerprint.std()
-
-        # Normalized cross-correlation
-        corr = signal.correlate2d(test_norm, ref_norm, mode='same', boundary='symm')
-        score = np.max(corr) / (test_norm.shape[0] * test_norm.shape[1])  # Optional: normalize by area
-
-        if score > best_score:
-            best_score = score
-            best_match = name
-
-    return best_match, best_score
-
-'''
 
 def match_camera(test_img, fingerprints):
     test_noise = extract_noise(test_img)
@@ -116,17 +146,31 @@ def validate_on_test_set(test_folder, fingerprints):
                 test_image = Image.open(file_path)
                 test_image = np.array(test_image)  # Convert to NumPy array for further use
                 test_image = test_image.astype(np.float32) / 255.0  # Normalize to [0, 1]
+            else:
+                file_path = os.path.join(root, file)
+                with open(file_path, 'rb') as f:
+                    test_image = f.read()
+                    test_image = imagecodecs.jpegxr_decode(test_image)
+                    if test_image.ndim == 3 and test_image.shape[2] in [3,4]:
+                       # Convert RGB to grayscale (luminance)
+                       # Using standard weights: 0.299 R + 0.587 G + 0.114 B
+                       test_image = np.array(test_image)  # Convert to NumPy array for further use
+                       test_image = test_image.astype(np.float32) / 255.0  # Normalize to [0, 1]
+                       test_image = np.dot(test_image[...,:3], [0.299, 0.587, 0.114]).astype(np.float32)
+                    else:
+                        test_image = test_image  # Already single channel
+            
 
-                # Match to camera
-                predicted_camera, score = match_camera(test_image, fingerprints)
+            # Match to camera
+            predicted_camera, score = match_camera(test_image, fingerprints)
 
-                # Assume ground truth camera name is the parent folder name (adjust if different)
-                ground_truth_camera = os.path.basename(os.path.dirname(file_path))
+            # Assume ground truth camera name is the parent folder name (adjust if different)
+            ground_truth_camera = os.path.basename(os.path.dirname(file_path))
 
-                y_true.append(ground_truth_camera)
-                y_pred.append(predicted_camera)
+            y_true.append(ground_truth_camera)
+            y_pred.append(predicted_camera)
 
-                print(f"[TEST] {file}: True={ground_truth_camera}, Predicted={predicted_camera} (Score: {score:.2f})")
+            print(f"[TEST] {file}: True={ground_truth_camera}, Predicted={predicted_camera} (Score: {score:.2f})")
 
     return y_true, y_pred
 
@@ -134,8 +178,8 @@ def validate_on_test_set(test_folder, fingerprints):
 
 if __name__ == "__main__":
     # Path to train and test folders
-    train_root = "trainjp2500kb" 
-    test_root =  "testjp2500kb" 
+    train_root = "trainjxr"
+    test_root =  "testjxr" 
 
     # Build fingerprints
     camera_fingerprints = build_camera_fingerprints(train_root)

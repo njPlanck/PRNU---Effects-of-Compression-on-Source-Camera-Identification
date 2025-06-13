@@ -332,7 +332,7 @@ def compress_all_images_by_camera(main_input_dir, main_output_dir, target_size_k
         if not os.path.isdir(camera_input_path):
             continue  # Skip files
 
-        print(f"\n📷 Processing Camera: {camera_name}")
+        print(f"\n Processing Camera: {camera_name}")
 
         # Create base output path for this camera
         camera_output_path = os.path.join(main_output_dir, camera_name)
@@ -349,7 +349,7 @@ def compress_all_images_by_camera(main_input_dir, main_output_dir, target_size_k
         for filename in os.listdir(camera_input_path):
             if filename.lower().endswith((".jpg", ".jpeg", ".png")):
                 input_path = os.path.join(camera_input_path, filename)
-                print(f"\n🔧 Compressing: {filename}")
+                print(f"\n Compressing: {filename}")
                 image_name = os.path.splitext(filename)[0]
 
                 for fmt in formats:
@@ -357,7 +357,7 @@ def compress_all_images_by_camera(main_input_dir, main_output_dir, target_size_k
                     metrics = compressors[fmt](input_path, output_path, target_size_kb)
 
                     if "error" in metrics:
-                        print(f"❌ {fmt.upper()} - {metrics['error']}")
+                        print(f" {fmt.upper()} - {metrics['error']}")
                         csv_data.append({
                             "Image": filename,
                             "Format": fmt.upper(),
@@ -385,7 +385,7 @@ def compress_all_images_by_camera(main_input_dir, main_output_dir, target_size_k
             writer.writeheader()
             writer.writerows(csv_data)
 
-        print(f"\n✅ Metrics saved for {camera_name}: {csv_path}")
+        print(f"\n Metrics saved for {camera_name}: {csv_path}")
 
 
 # Example usage
