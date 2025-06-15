@@ -48,9 +48,8 @@ def normalize_image(img):
 
 # Extract PRNU noise
 def extract_noise(img):
-    denoised = restoration.denoise_wavelet(img, method='BayesShrink', rescale_sigma=True)
+    denoised = sigma_filter(img)
     residual = img - denoised
-    residual = sigma_filter(residual)
     residual = normalize_image(residual)
     return residual
 
@@ -68,13 +67,25 @@ def get_camera_fingerprint(images):
 def load_images_from_folder(folder_path):
     images = []
     for filename in os.listdir(folder_path):
-        if filename.lower().endswith(('.jpg', '.jpeg', '.png','jp2','jxl')):
+        if filename.lower().endswith(('.jpg', '.jpeg', '.png','.jp2')):
             #img = io.imread(os.path.join(folder_path, filename), as_gray=True) / 255.0      #jpeg
             #img = cv2.imread(os.path.join(folder_path, filename), cv2.IMREAD_GRAYSCALE)
             #img = img.astype(np.float32) / 255.0  # Normalize to [0, 1]
             img = Image.open(os.path.join(folder_path, filename)).convert("L")  # 'L' mode = grayscale
             img = np.array(img)  # Convert to NumPy array for further use
             img = img.astype(np.float32) / 255.0  # Normalize if needed
+
+        elif filename.lower().endswith(('.jxl')):
+            with open(os.path.join(folder_path, filename), 'rb') as f:
+                img_bytes = f.read()
+                img = imagecodecs.jpegxl_decode(img_bytes)
+                img = np.array(img).astype(np.float32) / 255.0  # normalize
+                if img.ndim == 3 and img.shape[2] in [3,4]:
+                    # Convert RGB to grayscale (luminance)
+                    # # Using standard weights: 0.299 R + 0.587 G + 0.114 B
+                    img = np.dot(img[...,:3], [0.299, 0.587, 0.114]).astype(np.float32)
+                else:
+                    img = img  # Already single channel
         else:
             with open(os.path.join(folder_path, filename), 'rb') as f:
                 img = f.read()
@@ -136,26 +147,38 @@ def validate_on_test_set(test_folder, fingerprints):
 
     for root, dirs, files in os.walk(test_folder):
         for file in files:
-            if file.lower().endswith(('.jpg', '.jpeg', '.png','jp2','jxl')):
+            if file.lower().endswith(('.jpg', '.jpeg', '.png','.jp2')):
                 # Get full path
                 file_path = os.path.join(root, file)
 
                 # Load and normalize test image
                 #test_image = cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
                 #test_image = pyjxl.decode(file_path)
-                test_image = Image.open(file_path)
+                test_image = Image.open(file_path).convert("L") 
                 test_image = np.array(test_image)  # Convert to NumPy array for further use
                 test_image = test_image.astype(np.float32) / 255.0  # Normalize to [0, 1]
+            elif file.lower().endswith(('.jxl')):
+                file_path = os.path.join(root, file)            
+                with open(file_path, 'rb') as f:
+                    test_image = f.read()
+                    test_image = imagecodecs.jpegxl_decode(test_image)
+                    test_image = np.array(test_image).astype(np.float32) / 255.0  # normalize
+                    if test_image.ndim == 3 and test_image.shape[2] in [3,4]:
+                        # Convert RGB to grayscale (luminance)
+                        # # Using standard weights: 0.299 R + 0.587 G + 0.114 B
+                        test_image = np.dot(test_image[...,:3], [0.299, 0.587, 0.114]).astype(np.float32)
+                    else:
+                        test_image = test_image  # Already single channel
             else:
                 file_path = os.path.join(root, file)
                 with open(file_path, 'rb') as f:
                     test_image = f.read()
                     test_image = imagecodecs.jpegxr_decode(test_image)
+                    test_image = np.array(test_image)  # Convert to NumPy array for further use
+                    test_image = test_image.astype(np.float32) / 255.0  # Normalize to [0, 1]
                     if test_image.ndim == 3 and test_image.shape[2] in [3,4]:
                        # Convert RGB to grayscale (luminance)
                        # Using standard weights: 0.299 R + 0.587 G + 0.114 B
-                       test_image = np.array(test_image)  # Convert to NumPy array for further use
-                       test_image = test_image.astype(np.float32) / 255.0  # Normalize to [0, 1]
                        test_image = np.dot(test_image[...,:3], [0.299, 0.587, 0.114]).astype(np.float32)
                     else:
                         test_image = test_image  # Already single channel
@@ -178,8 +201,8 @@ def validate_on_test_set(test_folder, fingerprints):
 
 if __name__ == "__main__":
     # Path to train and test folders
-    train_root = "trainjxr"
-    test_root =  "testjxr" 
+    train_root = "train_images"
+    test_root =  "test_images" 
 
     # Build fingerprints
     camera_fingerprints = build_camera_fingerprints(train_root)

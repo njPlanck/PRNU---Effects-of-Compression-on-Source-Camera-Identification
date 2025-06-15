@@ -38,8 +38,44 @@ def evaluate_metrics(img1, img2):
     }
 
 
+def compress_jpeg(input_path, output_path, target_size_kb, min_quality=1, max_quality=25):
+    img1 = Image.open(input_path).convert("RGB")
+    target_bytes = target_size_kb * 1024
 
-def compress_jpeg(input_path, output_path, target_size_kb, quality_step=5, max_attempts=30):
+    low = min_quality
+    high = max_quality
+    best_quality = low
+    best_data = None
+
+    while low <= high:
+        quality = (low + high) // 2
+        buffer = io.BytesIO()
+        img1.save(buffer, "JPEG",
+                  quality=quality,
+                  subsampling=2,        # 4:2:0 chroma subsampling (most compressed)
+                  optimize=True,        # Huffman table optimization
+                  progressive=True)     # Progressive encoding
+        size = buffer.tell()
+
+        if size <= target_bytes:
+            best_quality = quality
+            best_data = buffer.getvalue()
+            low = quality + 1  # Try higher quality next
+        else:
+            high = quality - 1  # Try lower quality next
+
+    if best_data is not None:
+        with open(output_path, "wb") as f:
+            f.write(best_data)
+
+        img2 = Image.open(output_path).convert("RGB")
+        return evaluate_metrics(img1, img2)  # Assumes this is defined
+
+    return {"error": f"Could not compress to target size. Best achieved: {size // 1024}KB"}
+
+
+'''
+def compress_jpeg(input_path, output_path, target_size_kb, max_attempts=3000):
     img1 = Image.open(input_path).convert("RGB")
     target_bytes = target_size_kb * 1024
     
@@ -75,7 +111,7 @@ def compress_jpeg(input_path, output_path, target_size_kb, quality_step=5, max_a
         return evaluate_metrics(img1, img2)
     
     return {"error": f"Could not compress to target size. Best achieved: {best_size//1024}KB"}
-
+'''
 
 '''
 def compress_jp2(input_path, output_path, target_size_kb, min_q=0, max_q=1000):
@@ -252,9 +288,13 @@ def compress_jp2(input_path, output_path, target_size_kb, min_q=1, max_q=1000, m
         "best_quality": best_q,
     }
 
-def compress_jxr(input_path, output_path, target_size_kb, min_quality=1, max_quality=100):
-    img1 = Image.open(input_path).convert("RGB")
+def compress_jxr(input_path, output_path, target_size_kb, min_quality=0, max_quality=100):
+    img1 = cv2.imread(input_path, cv2.IMREAD_UNCHANGED)
+    img1 =  cv2.resize(img1, (0, 0), fx=0.7, fy=0.7, interpolation=cv2.INTER_AREA)
+    img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB)
+    img1 = Image.fromarray(img1)
     img = cv2.imread(input_path, cv2.IMREAD_UNCHANGED)
+    img = cv2.resize(img, (0, 0), fx=0.7, fy=0.7, interpolation=cv2.INTER_AREA)
     if img is None:
         return {"error": "Image read failed"}
 
@@ -282,7 +322,7 @@ def compress_jxr(input_path, output_path, target_size_kb, min_quality=1, max_qua
 
 
 
-def compress_jxl(input_path, output_path, target_size_kb, start_quality=40, max_quality=100, step=5):
+def compress_jxl(input_path, output_path, target_size_kb, start_quality=5, max_quality=100, step=2):
     img1 = Image.open(input_path).convert("RGB")
     best_quality = start_quality
     best_size = None
