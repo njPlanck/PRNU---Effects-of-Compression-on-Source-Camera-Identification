@@ -27,6 +27,6 @@ trainjpeg100kb/
 trainjxl100kb/
 trainjxr100kb/
 trainjxr500kb/
-ai-image-compression/
+ai-image-compression/images/
+ai-image-compression/datasets/
 saved_models/
-wandb/

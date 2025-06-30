@@ -1,0 +1,31 @@
+{
+  "os":  "Windows-10-10.0.26100-SP0",
+  "python":  "CPython 3.11.0",
+  "startedAt":  "2025-06-29T18:18:39.501680Z",
+  "program":  "C:\\Users\\User\\Desktop\\Work\\MediaDataFormat\\src_code\\ai-image-compression\\main.py",
+  "codePath":  "ai-image-compression\\main.py",
+  "git":  {
+    "remote":  "https://github.com/njPlanck/PRNU---Effects-of-Compression-on-Source-Camera-Identification.git",
+    "commit":  "6036e28c55c566034d126fbfd3337e02248dda45"
+  },
+  "email":  "njokuchinasa86@gmail.com",
+  "root":  "C:\\Users\\User\\Desktop\\Work\\MediaDataFormat\\src_code",
+  "host":  "DESKTOP-U1IU8OA",
+  "executable":  "C:\\Users\\User\\Desktop\\Work\\MediaDataFormat\\src_code\\venv\\scripts\\python.exe",
+  "codePathLocal":  "ai-image-compression\\main.py",
+  "cpu_count":  4,
+  "cpu_count_logical":  8,
+  "disk":  {
+    "/":  {
+      "total":  "509007224832",
+      "used":  "218668363776"
+    }
+  },
+  "memory":  {
+    "total":  "16942501888"
+  },
+  "cpu":  {
+    "count":  4,
+    "countLogical":  8
+  }
+}

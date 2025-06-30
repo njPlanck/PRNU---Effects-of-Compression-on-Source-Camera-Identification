@@ -1,0 +1,26 @@
+W&B initialized for project 'AI-Image-Compression' with run name 'run_027'.
+Configuration:
+  learning_rate: 0.0001
+  architecture: AI Image Compression AutoEncoder
+  dataset: CLIC_2021
+  epochs: 2000
+Failed to load the model from path saved_models/compression_model_2000000.pt: [Errno 2] No such file or directory: 'saved_models/compression_model_2000000.pt'
+  0%|                                                                                                                                                                                                                                                   | 0/1450 [00:00<?, ?it/s]C:\Users\User\Desktop\Work\MediaDataFormat\src_code\venv\Lib\site-packages\torch\utils\data\dataloader.py:665: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+  0%|                                                                                                                                                                                                                                                   | 0/1450 [00:04<?, ?it/s]
+Traceback (most recent call last):
+  File "C:\Users\User\Desktop\Work\MediaDataFormat\src_code\ai-image-compression\main.py", line 163, in <module>
+    main()
+  File "C:\Users\User\Desktop\Work\MediaDataFormat\src_code\ai-image-compression\main.py", line 146, in main
+    utils.save_model_checkpoint(counter, epoch, model_components, save_interval=200_000)
+  File "C:\Users\User\Desktop\Work\MediaDataFormat\src_code\ai-image-compression\src\utils.py", line 258, in save_model_checkpoint
+    torch.save({
+  File "C:\Users\User\Desktop\Work\MediaDataFormat\src_code\venv\Lib\site-packages\torch\serialization.py", line 964, in save
+    with _open_zipfile_writer(f) as opened_zipfile:
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\Desktop\Work\MediaDataFormat\src_code\venv\Lib\site-packages\torch\serialization.py", line 828, in _open_zipfile_writer
+    return container(name_or_buffer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\Desktop\Work\MediaDataFormat\src_code\venv\Lib\site-packages\torch\serialization.py", line 792, in __init__
+    torch._C.PyTorchFileWriter(
+RuntimeError: Parent directory saved_models does not exist.

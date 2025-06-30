@@ -1,0 +1,27 @@
+W&B initialized for project 'AI-Image-Compression' with run name 'run_027'.
+Configuration:
+  learning_rate: 0.0001
+  architecture: AI Image Compression AutoEncoder
+  dataset: CLIC_2021
+  epochs: 2000
+Failed to load the model from path saved_models/compression_model_2000000.pt: Attempting to deserialize object on a CUDA device but torch.cuda.is_available() is False. If you are running on a CPU-only machine, please use torch.load with map_location=torch.device('cpu') to map your storages to the CPU.
+  0%|                                                                                                                                                                                                                                                   | 0/1450 [00:00<?, ?it/s]C:\Users\User\Desktop\Work\MediaDataFormat\src_code\venv\Lib\site-packages\torch\utils\data\dataloader.py:665: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+Model checkpoint saved to saved_models/compression_model_0.pt
+  1%|██▍                                                                                                                                                                                                                                     | 15/1450 [01:42<2:43:31,  6.84s/it]
+Traceback (most recent call last):
+  File "C:\Users\User\Desktop\Work\MediaDataFormat\src_code\ai-image-compression\main.py", line 163, in <module>
+    main()
+  File "C:\Users\User\Desktop\Work\MediaDataFormat\src_code\ai-image-compression\main.py", line 131, in main
+    loss.backward()
+  File "C:\Users\User\Desktop\Work\MediaDataFormat\src_code\venv\Lib\site-packages\torch\_tensor.py", line 648, in backward
+    torch.autograd.backward(
+  File "C:\Users\User\Desktop\Work\MediaDataFormat\src_code\venv\Lib\site-packages\torch\autograd\__init__.py", line 353, in backward
+    _engine_run_backward(
+  File "C:\Users\User\Desktop\Work\MediaDataFormat\src_code\venv\Lib\site-packages\torch\autograd\graph.py", line 824, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\Desktop\Work\MediaDataFormat\src_code\venv\Lib\site-packages\torch\autograd\function.py", line 292, in apply
+    def apply(self, *args):
+
+KeyboardInterrupt
