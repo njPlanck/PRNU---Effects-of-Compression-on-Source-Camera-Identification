@@ -13,6 +13,10 @@ import pyjxl
 import glymur
 import math
 
+cjxl_path = r"C:/Program Files/jxl-x64-windows-static/cjxl.exe"  # Replace with actual path to cjxl.exe
+djxl_path = r"C:/Program Files/jxl-x64-windows-static/djxl.exe"
+
+
 # Global transform
 transform = transforms.ToTensor()
 
@@ -213,7 +217,7 @@ def compress_jp2(
     }
 '''
 
-def compress_jp2(input_path, output_path, target_size_kb, min_q=1, max_q=1000, max_attempts=12):
+def compress_jp2(input_path, output_path, target_size_kb, min_q=1, max_q=1000, max_attempts=1000):
     """Optimized JPEG2000 compression using OpenCV with in-memory binary search."""
     target_bytes = target_size_kb * 1024
 
@@ -290,7 +294,7 @@ def compress_jp2(input_path, output_path, target_size_kb, min_q=1, max_q=1000, m
 
 def compress_jxr(input_path, output_path, target_size_kb, min_quality=0, max_quality=100):
     img1 = cv2.imread(input_path, cv2.IMREAD_UNCHANGED)
-    img1 =  cv2.resize(img1, (0, 0), fx=0.7, fy=0.7, interpolation=cv2.INTER_AREA)
+    img1 =  cv2.resize(img1, (0, 0), fx=0.9, fy=0.9, interpolation=cv2.INTER_AREA)
     img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB)
     img1 = Image.fromarray(img1)
     img = cv2.imread(input_path, cv2.IMREAD_UNCHANGED)
@@ -354,6 +358,9 @@ def compress_jxl(input_path, output_path, target_size_kb, start_quality=5, max_q
     )
     img2 = Image.open(io.BytesIO(result.stdout))
     return evaluate_metrics(img1, img2)
+
+
+
 
 def compress_all_images_by_camera(main_input_dir, main_output_dir, target_size_kb):
     formats = ["jpeg", "jp2", "jxr", "jxl"]
@@ -429,8 +436,8 @@ def compress_all_images_by_camera(main_input_dir, main_output_dir, target_size_k
 
 
 # Example usage
-main_input_folder = "test_images"
-main_output_folder = "compressed_results_100kb/test_images"
-target_kb = 100
+main_input_folder = "train_images"
+main_output_folder = "compressed_results_10kb/train_images"
+target_kb = 10
 
 compress_all_images_by_camera(main_input_folder, main_output_folder, target_kb)

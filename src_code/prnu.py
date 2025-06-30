@@ -5,6 +5,7 @@ from scipy import signal
 from scipy.signal import fftconvolve
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 import matplotlib.pyplot as plt
+from scipy.ndimage import gaussian_filter
 import imagecodecs
 import cv2
 import pyjxl
@@ -46,13 +47,20 @@ def normalize_image(img):
     return (img - img_min) / (img_max - img_min + 1e-8)
 
 
+# Extract PRNU noise with gaussioab
+def extract_noise(img):
+    denoised = gaussian_filter(img,sigma=1)
+    residual = img - denoised
+    return residual
+
+'''
 # Extract PRNU noise
 def extract_noise(img):
     denoised = sigma_filter(img)
     residual = img - denoised
     residual = normalize_image(residual)
     return residual
-
+'''
 
 # --- Step 2: Compute average fingerprint for a camera ---
 def get_camera_fingerprint(images):
@@ -201,8 +209,8 @@ def validate_on_test_set(test_folder, fingerprints):
 
 if __name__ == "__main__":
     # Path to train and test folders
-    train_root = "train_images"
-    test_root =  "test_images" 
+    train_root = "trainjxl100kb"
+    test_root =  "testjxl100kb" 
 
     # Build fingerprints
     camera_fingerprints = build_camera_fingerprints(train_root)
