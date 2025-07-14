@@ -209,8 +209,8 @@ def validate_on_test_set(test_folder, fingerprints):
 
 if __name__ == "__main__":
     # Path to train and test folders
-    train_root = "trainjxl100kb"
-    test_root =  "testjxl100kb" 
+    train_root = "train_images"
+    test_root =  "testjpeg100kb" 
 
     # Build fingerprints
     camera_fingerprints = build_camera_fingerprints(train_root)
