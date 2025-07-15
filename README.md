@@ -27,6 +27,7 @@ More especially as these media data usually undergo various forms and levels of 
 Training Phase:
 * Extracts PRNU noise from each image.
 * Computes an average noise fingerprint for each camera.
+  
 Testing Phase:
 * Extracts noise from a test image.
 * Compares it against each camera fingerprint using normalized cross-correlation.
