@@ -25,7 +25,7 @@ More especially as these media data usually undergo various forms and levels of 
 
 ## Result Analysis
 Robustness of Sigma Filter:
-* The Sigma filter consistently yielded high correlation values and 100% SCI accuracy across all tested compression formats and target sizes—even at extreme compression levels (e.g., 100KB). This demonstrates the Sigma filter strength in preserving fine sensor noise patterns critical for reliable fingerprint extraction.
+* The Sigma filter consistently yielded high correlation values and 100% SCI accuracy across all tested compression formats and target sizes — even at extreme compression levels (e.g., 100KB). This demonstrates the Sigma filter strength in preserving fine sensor noise patterns critical for reliable fingerprint extraction.
 
 Limitations of Gaussian Filter:
 * While the Gaussian filter achieved perfect identification under mild compression (3MB), its accuracy sharply declined under stronger compression. This was consistent with reduction in quality of the compressed images. In some cases (e.g., JP2 or JXL at 100KB), accuracy dropped below 50%, and correlation scores were notably low. This emphasizes its reduced effectiveness in challenging conditions, due to uniform smoothing which may suppress PRNU traces.
