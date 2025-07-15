@@ -36,7 +36,7 @@ Compression Standard Comparison:
 
 Correlation Trends:
 * Under mild or no compression at all, PRNU results from gaussian filter maintained low correlation values yet accurate predictions, highlighting that correlation magnitude alone is not always a reliable indicator unless the pattern noise of the source camera is well-preserved.
-* In contrast, Sigma filtering maintained both high correlation and stable classification, making it more dependable even for very poor qaulity images.
+* In contrast, Sigma filtering maintained both high correlation and stable classification, making it more dependable even for very poor quality images.
 
 ## How It Works
 Training Phase:
