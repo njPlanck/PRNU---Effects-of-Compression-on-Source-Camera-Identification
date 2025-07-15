@@ -31,7 +31,7 @@ Limitations of Gaussian Filter:
 * While the Gaussian filter achieved perfect identification under mild compression (3MB), its accuracy sharply declined under stronger compression. This was consistent with reduction in quality of the compressed images. In some cases (e.g., JP2 or JXL at 100KB), accuracy dropped below 50%, and correlation scores were notably low. This emphasizes its reduced effectiveness in challenging conditions, due to uniform smoothing which may suppress PRNU traces.
 
 Compression Standard Comparison:
-* JPEG and JXR showed better performance under the Gaussian filter under mild compression (unlike JP2 and JXL), but failed as compression progressed.
+* JPEG and JXR showed better performance under the Gaussian filter with mild compression (unlike JP2 and JXL), but failed as compression progressed.
 * All standards showed robustness under Sigma filter filtering, both in accuracy and high correlation values.
 
 Correlation Trends:
