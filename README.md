@@ -23,6 +23,21 @@ More especially as these media data usually undergo various forms and levels of 
 * Computes correlation values used to match patten noise of compressed images with.
 * Displays a confusion matrix comparing predicted vs. actual camera sources.
 
+## Result Analysis
+Robustness of Sigma Filter:
+* The Sigma filter consistently yielded high correlation values and 100% SCI accuracy across all tested compression formats and target sizes—even at extreme compression levels (e.g., 100KB). This demonstrates the Sigma filter strength in preserving fine sensor noise patterns critical for reliable fingerprint extraction.
+
+Limitations of Gaussian Filter:
+* While the Gaussian filter achieved perfect identification under mild compression (3MB), its accuracy sharply declined under stronger compression. This was consistent with reduction in quality of the compressed images. In some cases (e.g., JP2 or JXL at 100KB), accuracy dropped below 50%, and correlation scores were notably low. This emphasizes its reduced effectiveness in challenging conditions, due to uniform smoothing which may suppress PRNU traces.
+
+Compression Standard Comparison:
+* JPEG and JXR showed better performance under the Gaussian filter at under mild compression but failed under higher compression.
+* JP2 and JXL both  showed worse robustness under Sigma filtering, both in accuracy and correlation values.
+The correlation values improved across different standards with Sigma filtering.
+Correlation Trends:
+* It was observed that Gaussian-filtered results maintained low correlation values yet accurate predictions, highlighting that correlation magnitude alone is not always a reliable indicator unless the signal is well-preserved.
+* In contrast, Sigma filtering maintained both high correlation and stable classification, making it more dependable even for very poor images.
+
 ## How It Works
 Training Phase:
 * Extracts PRNU noise from each image.
