@@ -34,6 +34,7 @@ Compression Standard Comparison:
 * JPEG and JXR showed better performance under the Gaussian filter at under mild compression but failed under higher compression.
 * JP2 and JXL both  showed worse robustness under Sigma filtering, both in accuracy and correlation values.
 The correlation values improved across different standards with Sigma filtering.
+
 Correlation Trends:
 * It was observed that Gaussian-filtered results maintained low correlation values yet accurate predictions, highlighting that correlation magnitude alone is not always a reliable indicator unless the signal is well-preserved.
 * In contrast, Sigma filtering maintained both high correlation and stable classification, making it more dependable even for very poor images.
