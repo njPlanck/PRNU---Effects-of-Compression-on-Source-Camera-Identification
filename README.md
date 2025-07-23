@@ -48,11 +48,6 @@ Testing Phase:
 * Compares it against each camera fingerprint using normalized cross-correlation.
 * Selects the camera with the highest similarity score.
 
-## Notes
-* Ensure images are grayscale or are converted to grayscale. This is for speed of computation.
-* Noise extraction uses wavelet denoising (BayesShrink) from scikit-image.
-* JPEG XL and JP2 decoding handled via Pillow and pyjxl.
-
 ## References
 1. M. S. Behare, A. S. Bhalchandra, and R. Kumar, "Source Camera Identification using Photo Response Noise Uniformity," in Proc. 3rd Int. Conf. on Electronics Communication and Aerospace Technology (ICECA), Coimbatore, India, Jun. 2019.
 2. J. Lu, C. Li, X. Huang, C. Cui, and M. Emam, "Source camera identification algorithm based on multi-scale feature fusion," Forensic Science International: Digital Investigation, published online Aug. 15, 2024.
