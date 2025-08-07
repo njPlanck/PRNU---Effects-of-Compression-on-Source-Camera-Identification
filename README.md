@@ -7,8 +7,8 @@ Overall, our work highlights the ongoing relevance and reliability of PRNU-based
 
 ## Overview
 The Photo Response Non-Uniformity (PRNU) is a fixed pattern noise introduced by a camera device during the manufacturing of the device. Patterns like these are near invisible artifacts which make the device different from others. This is such that when an image/video is acquired by a camera, it is possible to trace their source device. For instance, images of the same scene captured with different camera have different pattern noise unique to each camera. These noise are also be referred to as camera fingerprints/residue.
-![Fingerprint extraction from gaussian and sigma filters](image.png)
-![Zoomed fingerprints](image-1.png)
+![Fingerprint extraction from gaussian and sigma filters](img/image.png)
+![Zoomed fingerprints](img/image-1.png)
 
 
 ## Motivation
@@ -26,9 +26,9 @@ More especially as these media data usually undergo various forms and levels of 
 * Computes correlation values used to match patten noise of compressed images with.
 * Displays a confusion matrix comparing predicted vs. actual camera sources.
 ### Correlation values of sigma filter across different standards and compression ratios
-![Correlation values for sigma](image-2.png)
+![Correlation values for sigma](img/image-2.png)
 ### Correlation values of guassian filter across different standards and compression ratios
-![Correlation values for gaussian](image-3.png)
+![Correlation values for gaussian](img/image-3.png)
 
 ## Result Analysis
 Robustness of Sigma Filter:
