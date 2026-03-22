@@ -1,26 +1,20 @@
 # Effect of Compression on Camera Identification via PRNU (Photo-Response Non-Uniformity)
-This project demonstrates the application of Photo Response Non-Uniformity (PRNU) for source camera identification, emphasizing the challenges posed by image compression. By analyzing multiple compression formats and levels using classical filtering techniques, we were able to assess how PRNU patterns behave under varying degrees of image degradation.
+This project investigates the application of Photo Response Non-Uniformity (PRNU) for source camera identification, with a specific focus on the challenges posed by image compression. By analyzing various compression formats and bitrates, we assess how source attribution is affected by image degradation across different denoising filters, specifically Sigma and Gaussian filters.
 
-In addition to forensic performance, we computed different quality metrics (the  PSNR and SSIM, for reference quality metrics and then BRISQUE, for the no reference quality metrics) to better understand the relationship between visual fidelity and camera fingerprint preservation. We observed that classification accuracy reduced as images were progressively degraded for gaussian filter, while the results from sigma filter remained stable and even showed that as more scene information was removed due to compression, the correlation of the pattern noise to the reference pattern for each device improved across all standards.
+PRNU patterns are deterministic, fixed-pattern noises introduced by a camera sensor during image acquisition. These near-invisible artifacts serve as a unique "camera fingerprint," allowing a specific image or video to be traced back to its source device.
 
-Overall, our work highlights the ongoing relevance and reliability of PRNU-based identification methods, especially when appropriate removal of scene information is applied. This result supports the use of filters like sigma filter ahead of gaussian filter in digital forensics because of their robustness in the presence of significant compression.
+While existing literature identifies image compression as a significant challenge to PRNU-based attribution, this study examines whether this degradation is consistent across all extraction filters. We aim to determine if the loss of these "fingerprints" is a universal consequence of compression or if the residue retention is dependent on the specific compression scheme and filtering method employed.
 
-## Overview
-The Photo Response Non-Uniformity (PRNU) is a fixed pattern noise introduced by a camera device during the manufacturing of the device. Patterns like these are near invisible artifacts which make the device different from others. This is such that when an image/video is acquired by a camera, it is possible to trace their source device. For instance, images of the same scene captured with different camera have different pattern noise unique to each camera. These noise are also be referred to as camera fingerprints/residue.
+This work highlights the ongoing relevance and reliability of PRNU-based identification methods, especially when appropriate removal of scene information is applied. This result supports the use of filters like sigma filter ahead of gaussian filter in digital forensics because of their robustness in the presence of significant compression.
+
 ![Fingerprint extraction from gaussian and sigma filters](img/image.png)
 ![Zoomed fingerprints](img/image-1.png)
-
 
 ## Motivation
 With the growing adoption of technology, we have also seen the rapid growth of the amount of media data that is shared and transferred between people, networks and devices. Once an image/video is shared, or transferred, it becomes very difficult to identify their source device where they must have been captured. This is a big problem in multimedia forensics, as it is often necessary to check for data tampering and other abuses like leaks of illegal images/videos.
 More especially as these media data usually undergo various forms and levels of compression when they are captured, uploaded and/or transferred from one device/network to the other
 
-## Features
-* PRNU noise extraction with gaussian and sigma filter denoising.
-* Fingerprint averaging from multiple images per camera.
-* Fast and robust camera matching using FFT-based normalized cross-correlation.
-* Supports JPEG, PNG, JPEG2000 (.jp2), and JPEG XL (.jxl) image formats.
-* Automatic validation and evaluation using a confusion matrix.
+
 
 ## Output
 * Computes correlation values used to match patten noise of compressed images with.
@@ -29,6 +23,10 @@ More especially as these media data usually undergo various forms and levels of 
 ![Correlation values for sigma](img/image-2.png)
 ### Correlation values of guassian filter across different standards and compression ratios
 ![Correlation values for gaussian](img/image-3.png)
+
+
+In addition to forensic performance, we computed different quality metrics (the  PSNR and SSIM, for reference quality metrics and then BRISQUE, for the no reference quality metrics) to better understand the relationship between visual fidelity and camera fingerprint preservation. We observed that classification accuracy reduced as images were progressively degraded for gaussian filter, while the results from sigma filter remained stable and even showed that as more scene information was removed due to compression, the correlation of the pattern noise to the reference pattern for each device improved across all standards.
+
 
 ## Result Analysis
 Robustness of Sigma Filter:
@@ -59,5 +57,6 @@ Testing Phase:
 1. M. S. Behare, A. S. Bhalchandra, and R. Kumar, "Source Camera Identification using Photo Response Noise Uniformity," in Proc. 3rd Int. Conf. on Electronics Communication and Aerospace Technology (ICECA), Coimbatore, India, Jun. 2019.
 2. J. Lu, C. Li, X. Huang, C. Cui, and M. Emam, "Source camera identification algorithm based on multi-scale feature fusion," Forensic Science International: Digital Investigation, published online Aug. 15, 2024.
 3. I. Amerini, R. Caldelli, A. Del Mastio, A. Di Fuccia, C. Molinari, and A. P. Rizzo, "Dealing with video source identification in social networks," Signal Processing: Image Communication, vol. 56, pp. 23–31, Apr. 2017.
-4. For AI- Compression we used Hannah Neumann's pretrained model from : https://github.com/Hannah-Neumann/ai-image-compression/tree/main
+4. S. Chakraborty, "Effect of JPEG compression on Sensor-based Image Forensics," 2021 4th International Conference on Information and Computer Technologies (ICICT), HI, USA, 2021, pp. 104-109, doi: 10.1109/ICICT52872.2021.00025. keywords: {Location awareness;Q-factor;Image forensics;Image coding;Correlation;Digital images;Transform coding;Digital Image Forensics;Photo Response Non-Uniformity;sensor noise;camera identification;manipulation localization},
+
 
