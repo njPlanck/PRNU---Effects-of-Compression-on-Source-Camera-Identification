@@ -62,7 +62,7 @@ def extract_noise(img):
     return residual
 '''
 
-# --- Step 2: Compute average fingerprint for a camera ---
+# Compute average fingerprint for a camera
 def get_camera_fingerprint(images):
     prnu = np.zeros_like(images[0])
     for img in images:
@@ -71,14 +71,11 @@ def get_camera_fingerprint(images):
 
 
 
-# --- Step 3: Load grayscale images from a folder ---
+# Load grayscale images from a folder 
 def load_images_from_folder(folder_path):
     images = []
     for filename in os.listdir(folder_path):
         if filename.lower().endswith(('.jpg', '.jpeg', '.png','.jp2')):
-            #img = io.imread(os.path.join(folder_path, filename), as_gray=True) / 255.0      #jpeg
-            #img = cv2.imread(os.path.join(folder_path, filename), cv2.IMREAD_GRAYSCALE)
-            #img = img.astype(np.float32) / 255.0  # Normalize to [0, 1]
             img = Image.open(os.path.join(folder_path, filename)).convert("L")  # 'L' mode = grayscale
             img = np.array(img)  # Convert to NumPy array for further use
             img = img.astype(np.float32) / 255.0  # Normalize if needed
@@ -111,7 +108,7 @@ def load_images_from_folder(folder_path):
 
     
 
-# --- Step 4: Create fingerprints for each camera folder ---
+# Create fingerprints for each camera folders
 
 
 def build_camera_fingerprints(root_folder):
@@ -205,7 +202,7 @@ def validate_on_test_set(test_folder, fingerprints):
 
     return y_true, y_pred
 
-# --- Step 2: Run validation ---
+# Run validation
 
 if __name__ == "__main__":
     # Path to train and test folders
