@@ -12,32 +12,14 @@ With the growing adoption of technology, the amount of media data that is shared
 
 To build the camera fingerprint or residue, the PRNU patterns from images from the camera is first extracted. This is done by filtering the individual images with a chosen filter. The filtered images are then subtracted from their original selves. The underdlying assumption is that the camera sensor leaves unique uncorrelated noise patterns on the images of scenes captured. Therefore by filtering, we isolate or extract these noise patterns from the actual scene information. And the weighted mean of these noise patterns from images of the same camera sensor approximates to the camera fingerprint or reference pattern unique only to that camera.
 
-$D = W(I)$
-
-$F = I - D$
-    
-$R = \bar{F}$
-
-$\bar{F} = \frac{1}{n}\sum_{i=1}^n F_i$
-
-where;
-
-- \( I \): Original image  
-- \( W \): Chosen filter or denoising Function 
-- \( D \): Denoised image   
-- \( F \): Extracted fingerprint  
-- \( R \): Reference pattern computed from fingerprints Fi_s
 ### Mathematical Formulation
 The extraction of the noise residue and the generation of the camera reference pattern are defined as follows:
-
 $$
 F_i = I_i - W(I_i)
 $$
-
 $$
 R = \frac{1}{n} \sum_{i=1}^{n} F_i
 $$
-
 **Where:**
 * **$I_i$**: The $i$-th original image in the training set.
 * **$W(\cdot)$**: The denoising operator (Sigma or Gaussian filter).
