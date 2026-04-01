@@ -14,12 +14,15 @@ To build the camera fingerprint or residue, the PRNU patterns from images from t
 
 ### Mathematical Formulation
 The extraction of the noise residue and the generation of the camera reference pattern are defined as follows:
+
 $$
 F_i = I_i - W(I_i)
 $$
+
 $$
 R = \frac{1}{n} \sum_{i=1}^{n} F_i
 $$
+
 **Where:**
 * **$I_i$**: The $i$-th original image in the training set.
 * **$W(\cdot)$**: The denoising operator (Sigma or Gaussian filter).
