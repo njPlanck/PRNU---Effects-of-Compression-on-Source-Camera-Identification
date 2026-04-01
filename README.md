@@ -65,12 +65,9 @@ To identify a source camera of an image, we simply compute the correlation used 
 | **JXR** | 100% / 100% | 100% / 100% | 100% / 95% | 100% / 35% |
 | **JXL** | 100% / 100% | 100% / 90% | 100% / 50% | 100% / 35% |
 
+### Correlation Values of Sigma Filter Vs Gaussian Filter Across Different Standards and Compression Ratios
+<img src="img/image-2.png" alt="Correlation values for sigma" width="400"> <img src="img/image-3.png" alt="Correlation values for gaussian" width="400">
 
-
-### Correlation values of sigma filter across different standards and compression ratios
-![Correlation values for sigma](img/image-2.png)
-### Correlation values of guassian filter across different standards and compression ratios
-![Correlation values for gaussian](img/image-3.png)
 
 
 In addition to forensic performance, we computed different quality metrics (the  PSNR and SSIM, for reference quality metrics and then BRISQUE, for the no reference quality metrics) to better understand the relationship between visual fidelity and camera fingerprint preservation. We observed that classification accuracy reduced as images were progressively degraded for gaussian filter, while the results from sigma filter remained stable and even showed that as more scene information was removed due to compression, the correlation of the pattern noise to the reference pattern for each device improved across all standards.
