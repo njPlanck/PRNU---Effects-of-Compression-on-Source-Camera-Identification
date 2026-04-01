@@ -55,15 +55,15 @@ To identify a source camera of an image, we simply compute the correlation used 
 ### Correlation Scores And Confusion Matrix For JPEG and JXL Before Compression, At 3MB and 100KB Compression Levels.
 <img src="img/image-r.png" alt="Fingerprint extraction from gaussian and sigma filters" width="430"> <img src="img/image-r2.png" alt="Fingerprint extraction from gaussian and sigma filters" width="400">
 
-### Matching Accuracy 
-Compression Scheme		Accuracy						
-    Before Compression		 3MB		500KB		100KB	
-    Sigma	Gaussian	Sigma	Gaussian	Sigma	Gaussian	Sigma	Gaussian
-JPEG	100%	100%	100%	100%	100%	95%	100%	65%
-JP2000	100%	100%	100%	95%	100%	20%	100%	55%
-JXR	100%	100%	100%	100%	100%	95%	100%	35%
-JXL	100%	100%	100%	90%	100%	50%	100%	35%
+### Matching Accuracy ResultsThe following table compares the identification accuracy of the Sigma vs. Gaussian filters across varying compression levels.
 
+| Compression Scheme | Before Compression | 3MB (Light) | 500KB (Mid) | 100KB (Heavy) |
+| :--- | :---: | :---: | :---: | :---: |
+| | **Sigma / Gaussian** | **Sigma / Gaussian** | **Sigma / Gaussian** | **Sigma / Gaussian** |
+| **JPEG** | 100% / 100% | 100% / 100% | 100% / 95% | 100% / 65% |
+| **JP2000 (JP2)** | 100% / 100% | 100% / 95% | 100% / 20% | 100% / 55% |
+| **JXR** | 100% / 100% | 100% / 100% | 100% / 95% | 100% / 35% |
+| **JXL** | 100% / 100% | 100% / 90% | 100% / 50% | 100% / 35% |
 
 
 
