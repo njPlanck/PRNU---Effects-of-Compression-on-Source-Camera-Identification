@@ -48,11 +48,12 @@ To identify a source camera of an image, we simply compute the correlation used 
 
 ## Analysis and Results
 
-<img src="img/image-r3.png" alt="Fingerprint extraction from gaussian and sigma filters" width="420">
-* JPEG Compression Results Across the Various Compression Levels.
+### JPEG Compression Results Across the Various Compression Levels.
+<img src="img/image-r3.png" alt="Fingerprint extraction from gaussian and sigma filters" width="600">
 
+### Correlation Scores And Confusion Matrix For JPEG and JXL SCI.
 <img src="img/image-r.png" alt="Fingerprint extraction from gaussian and sigma filters" width="430"> <img src="img/image-r2.png" alt="Fingerprint extraction from gaussian and sigma filters" width="400">
-* Displays a confusion matrix comparing predicted vs. actual camera sources.
+
 
 
 ### Correlation values of sigma filter across different standards and compression ratios
