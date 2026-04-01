@@ -39,9 +39,9 @@ For this project sigma and gaussian filters were chosen. These filters are state
 ## Data Outline
 Images used in this project were from the dataset used by Jianfeng Lu, Caijin Li, Xiangye Huang, Chen Cui, and Mahmoud Emam for their 2024 <a href="https://www.kaggle.com/datasets/mahmoudemam85/source-camera-identification-a-custom-dataset"> paper: "Source Camera Identification Algorithm Based On Multi-Scale Feature Fusion". </a>
 
-However, in order to avoid double compression, only images of the PNG formats were considered for the JPEG, JP2, JXR and JXL compression. And sizes of these selected images were about 20MB on the average before compression. While the target sizes for compression were 3MB, 500KB, and 100KB across the various schemes to give a uniform compression ratios of 7:1, 40:1, and 200:1 respectively.
+However, in order to avoid double compression, only images of the PNG formats were considered for the JPEG, JP2, JXR and JXL compression. The sizes of these selected images were about 20MB on the average before compression. And the target sizes for compression were 3MB, 500KB, and 100KB across the various schemes to give a uniform compression ratios of 7:1, 40:1, and 200:1 respectively.
 
-A total of 80 images were sampled from 5 different cameras, labelled thus as D36, D37, D38, D39, D40. For the training, 60 images were used for building the reference PRNU pattern. This was divided into 5 categories (12 for each camera device). On the other hand, 20 images were used to perform the correlation on the referenced patterns. They were also split into 5 categories (4 for each camera device)
+A total of 80 images were sampled from 5 different cameras, labelled thus as D36, D37, D38, D39, D40. For the training, 60 images were used for building the reference PRNU pattern. This was divided into 5 categories (12 for each camera device). The remaining 20 images were then used to perform the correlation on the referenced patterns. They were also split into 5 categories (4 for each camera device)
 
 ## Identifying Source Cameras
 
@@ -68,6 +68,8 @@ To identify a source camera of an image, we simply compute the correlation used 
 ### Correlation Values of Sigma Filter Vs Gaussian Filter Across Different Standards and Compression Ratios
 <img src="img/image-2.png" alt="Correlation values for sigma" width="400"> <img src="img/image-3.png" alt="Correlation values for gaussian" width="400">
 
+### Quality Metrics
+<img src="img/image-r5.png" alt="Correlation values for sigma" width="600"> 
 
 
 In addition to forensic performance, we computed different quality metrics (the  PSNR and SSIM, for reference quality metrics and then BRISQUE, for the no reference quality metrics) to better understand the relationship between visual fidelity and camera fingerprint preservation. We observed that classification accuracy reduced as images were progressively degraded for gaussian filter, while the results from sigma filter remained stable and even showed that as more scene information was removed due to compression, the correlation of the pattern noise to the reference pattern for each device improved across all standards.
