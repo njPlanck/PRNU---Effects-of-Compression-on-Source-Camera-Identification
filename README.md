@@ -32,7 +32,7 @@ where;
 For this project sigma and gaussian filters were chosen. These filters are state-of-the-art examples of the two broad classification of digital filters. While sigma filter has very good edge preservation properties, the gaussian filter has a strong natural bluring capabilties for suppressing high frequencies on the other hand, making it one of the best examples of the non-edge preserving filter class.
 
 
-<img src="img/image.png" alt="Fingerprint extraction from gaussian and sigma filters" width="400"><img src="img/image-1.png" alt="Fingerprint extraction from gaussian and sigma filters" width="300">
+<img src="img/image.png" alt="Fingerprint extraction from gaussian and sigma filters" width="400"><img src="img/image-1.png" alt="Fingerprint extraction from gaussian and sigma filters" width="500">
 
 
 ## Data Outline
