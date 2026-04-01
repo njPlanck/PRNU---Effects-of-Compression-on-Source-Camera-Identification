@@ -3,7 +3,7 @@ This project investigates the application of Photo Response Non-Uniformity (PRNU
 
 PRNU patterns are deterministic, fixed-pattern noises introduced by a camera sensor during image acquisition. These near-invisible artifacts serve as a unique "camera fingerprint," allowing a specific image or video to be traced back to its source device.
 
-While existing literature identifies image compression as a significant challenge to PRNU-based attribution, this study examines whether this degradation is consistent across all extraction filters. We aim to determine if the loss of these "fingerprints" is a universal consequence of compression or if the residue retention is dependent on the specific compression scheme and filtering method employed. With this work we further highlights the ongoing relevance and reliability of PRNU-based identification methods in source camera identification, especially when appropriate removal of scene information is applied. The result supports the use of filters like sigma filter ahead of gaussian filter in digital forensics because of their robustness in the presence of significant compression.
+While existing literature identifies image compression as a significant challenge to PRNU-based attribution, this study examines whether this degradation is consistent across all extraction filters. We aim to determine if the loss of these "fingerprints" is a universal consequence of compression or if the residue retention is dependent on the specific compression scheme and filtering method employed. With this work we further highlight the ongoing relevance and reliability of PRNU-based identification methods in source camera identification, especially when appropriate removal of scene information is applied.
 
 ## Motivation
 With the growing adoption of technology, the amount of media data that is shared and transferred between people, networks and devices has also notably increased. Once an image/video is shared, or transferred, it becomes very difficult to identify their source device where they must have been captured. This is a big problem in multimedia forensics, as it is often necessary to check for data tampering and other abuses like leaks of illegal images/videos. More especially as these media data usually undergo various forms and levels of compression when they are captured, uploaded and/or transferred from one device/network to the other.
@@ -47,7 +47,11 @@ A total of 80 images were sampled from 5 different cameras, labelled thus as D36
 To identify a source camera of an image, we simply compute the correlation used to match reference pattern noise from selected camera. The camera with the highest correlation value confirms the source match. to optimise for speed, the fast normalised correlation was used for matching the images to their computed reference patterns.
 
 ## Analysis and Results
-<img src="img/image-r.png" alt="Fingerprint extraction from gaussian and sigma filters" width="400"> <img src="img/image-r2.png" alt="Fingerprint extraction from gaussian and sigma filters" width="400">
+
+<img src="img/image-r3.png" alt="Fingerprint extraction from gaussian and sigma filters" width="420">
+* JPEG Compression Results Across the Various Compression Levels.
+
+<img src="img/image-r.png" alt="Fingerprint extraction from gaussian and sigma filters" width="430"> <img src="img/image-r2.png" alt="Fingerprint extraction from gaussian and sigma filters" width="400">
 * Displays a confusion matrix comparing predicted vs. actual camera sources.
 
 
