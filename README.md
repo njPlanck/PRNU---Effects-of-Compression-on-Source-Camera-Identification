@@ -46,15 +46,7 @@ A total of 80 images were sampled from 5 different cameras, labelled thus as D36
 To identify a source camera of an image, we simply compute the correlation used to match reference pattern noise from selected camera. The camera with the highest correlation value confirms the source match. to optimise for speed, the fast normalised correlation was used for matching the images to their computed reference patterns.
 
 ## Analysis and Results
-![alt text](image.png)
-
-## Choice of Filter
-For this project sigma and gaussian filters were chosen...suppressing high frequencies on the other hand, making it one of the best examples of the non-edge preserving filter class.
-
-<img src="img/image.png" alt="Fingerprint extraction from gaussian and sigma filters" width="500">
-
-
-
+<img src="image.png" alt="Fingerprint extraction from gaussian and sigma filters" width="600">
 
 
 * Displays a confusion matrix comparing predicted vs. actual camera sources.
