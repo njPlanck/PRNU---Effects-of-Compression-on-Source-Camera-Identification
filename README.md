@@ -28,6 +28,11 @@ where;
 - \( F \): Extracted fingerprint  
 - \( R \): Reference pattern computed from fingerprints Fi_s
 
+Mathematical FormulationThe extraction of the noise residue and the generation of the camera reference pattern are defined as follows:$$\begin{aligned}
+F_i &= I_i - W(I_i) \\
+R &= \frac{1}{n} \sum_{i=1}^{n} F_i
+\end{aligned}$$Where:$I_i$: The $i$-th original image in the training set.$W(\cdot)$: The denoising operator (Sigma or Gaussian filter).$F_i$: The extracted noise residue (fingerprint) for image $i$.$R$: The computed camera reference pattern (mean PRNU).
+
 ## Choice of Filter
 For this project sigma and gaussian filters were chosen. These filters are state-of-the-art examples of the two broad classification of digital filters. While sigma filter has very good edge preservation properties, the gaussian filter has a strong natural bluring capabilties for suppressing high frequencies on the other hand, making it one of the best examples of the non-edge preserving filter class.
 
