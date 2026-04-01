@@ -49,7 +49,6 @@ To identify a source camera of an image, we simply compute the correlation used 
 <img src="image-1.png" alt="Fingerprint extraction from gaussian and sigma filters" width="350"> <img src="image.png" alt="Fingerprint extraction from gaussian and sigma filters" width="350">
 
 
-
 * Displays a confusion matrix comparing predicted vs. actual camera sources.
 ### Correlation values of sigma filter across different standards and compression ratios
 ![Correlation values for sigma](img/image-2.png)
