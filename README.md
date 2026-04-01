@@ -31,8 +31,9 @@ where;
 ## Choice of Filter
 For this project sigma and gaussian filters were chosen. These filters are state-of-the-art examples of the two broad classification of digital filters. While sigma filter has very good edge preservation properties, the gaussian filter has a strong natural bluring capabilties for suppressing high frequencies on the other hand, making it one of the best examples of the non-edge preserving filter class.
 
-![Fingerprint extraction from gaussian and sigma filters](img/image.png)
-![Zoomed fingerprints](img/image-1.png)
+
+<img src="img/image.png" alt="Fingerprint extraction from gaussian and sigma filters" width="600"><img src="img/image-1.png" alt="Fingerprint extraction from gaussian and sigma filters" width="200">
+
 
 ## Data Outline
 Images used in this project were from the dataset used by Jianfeng Lu, Caijin Li, Xiangye Huang, Chen Cui, and Mahmoud Emam for their 2024 <a href="https://www.kaggle.com/datasets/mahmoudemam85/source-camera-identification-a-custom-dataset"> paper: "Source Camera Identification Algorithm Based On Multi-Scale Feature Fusion". </a>
