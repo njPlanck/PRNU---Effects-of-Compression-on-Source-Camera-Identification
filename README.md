@@ -110,10 +110,11 @@ python prnu.py --input data/train
 #### 6. Run evaluation
 python analysis.py 
 
-* Expected Structure
+#### Expected Structure
 data/
   train/
   test/
+src/
 
 
 ## References
