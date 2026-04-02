@@ -91,7 +91,7 @@ Our results indicate that while correlation values may have increased as images 
 ### How to Run
 #### 1. Clone repo
 git clone https://github.com/njPlanck/PRNU---Effects-of-Compression-on-Source-Camera-Identification.git
-cd src_code
+cd PRNU---Effects-of-Compression-on-Source-Camera-Identification
 
 #### 2. Create environment
 python -m venv venv
