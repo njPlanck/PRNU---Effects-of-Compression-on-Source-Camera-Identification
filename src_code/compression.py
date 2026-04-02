@@ -158,7 +158,6 @@ def compress_jxr(input_path, output_path, target_size_kb, min_quality=0, max_qua
     img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB)
     img1 = Image.fromarray(img1)
     img = cv2.imread(input_path, cv2.IMREAD_UNCHANGED)
-    img = cv2.resize(img, (0, 0), fx=0.7, fy=0.7, interpolation=cv2.INTER_AREA)
     if img is None:
         return {"error": "Image read failed"}
 
