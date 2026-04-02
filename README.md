@@ -101,14 +101,14 @@ source venv/bin/activate   # or .\venv\Scripts\activate on Windows
 pip install -r requirements.txt
 
 #### 4. Run Compression script extraction
-python compression.py
+python src_code/compression.py
 
 #### 5. Run PRNU extraction
-python prnu.py --input data/train 
+python src_code/prnu.py --input data/train 
 
 
 #### 6. Run evaluation
-python analysis.py 
+python src_code/analysis.py 
 
 #### Expected Structure
 ```
