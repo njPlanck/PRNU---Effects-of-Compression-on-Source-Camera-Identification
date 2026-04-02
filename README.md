@@ -88,6 +88,34 @@ Quality Metrics of Compressed Images:
 Our results indicate that while correlation values may have increased as images were aggressively compressed, the matching accuracy remained stable for sigma filter. This was not the same for gaussian filter under high compression levels. This raises the question on effectiveness of a compression attack on SCI based on PRNU patterns. In particular, they suggest that such effectiveness is dependent more on the choice of filter, and less on the compression strength or coding scheme.
 
 
+### How to Run
+#### 1. Clone repo
+git clone https://github.com/njPlanck/PRNU---Effects-of-Compression-on-Source-Camera-Identification.git
+cd src_code
+
+#### 2. Create environment
+python -m venv venv
+source venv/bin/activate   # or .\venv\Scripts\activate on Windows
+
+#### 3. Install dependencies
+pip install -r requirements.txt
+
+#### 4. Run Compression script extraction
+python compression.py
+
+#### 5. Run PRNU extraction
+python prnu.py --input data/train 
+
+
+#### 6. Run evaluation
+python analysis.py 
+
+* Expected Structure
+data/
+  train/
+  test/
+
+
 ## References
 1. M. S. Behare, A. S. Bhalchandra, and R. Kumar, "Source Camera Identification using Photo Response Noise Uniformity," in Proc. 3rd Int. Conf. on Electronics Communication and Aerospace Technology (ICECA), Coimbatore, India, Jun. 2019.
 2. J. Lu, C. Li, X. Huang, C. Cui, and M. Emam, "Source camera identification algorithm based on multi-scale feature fusion," Forensic Science International: Digital Investigation, published online Aug. 15, 2024.
