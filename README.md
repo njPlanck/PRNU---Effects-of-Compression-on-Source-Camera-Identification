@@ -1,16 +1,16 @@
 # Effect of Compression on Camera Identification via PRNU (Photo-Response Non-Uniformity)
 This project investigates the application of Photo Response Non-Uniformity (PRNU) for source camera identification, with a specific focus on the challenges posed by image compression. By analyzing various compression formats and bitrates, we assess how source attribution is affected by image degradation across different denoising filters, specifically Sigma and Gaussian filters.
 
-PRNU patterns are deterministic, fixed-pattern noises introduced by a camera sensor during image acquisition. These near-invisible artifacts serve as a unique "camera fingerprint," allowing a specific image or video to be traced back to its source device.
-
-While existing literature identifies image compression as a significant challenge to PRNU-based attribution, this study examines whether this degradation is consistent across all extraction filters. We aim to determine if the loss of these "fingerprints" is a universal consequence of compression or if the residue retention is dependent on the specific compression scheme and filtering method employed. With this work we further highlight the ongoing relevance and reliability of PRNU-based identification methods in source camera identification, especially when appropriate removal of scene information is applied.
+To begin with, PRNU patterns are defined as fixed-pattern noises introduced by a camera sensor during image acquisition. These near-invisible artifacts serve as a unique "camera fingerprint," allowing a specific image or video to be traced back to its source device. In other words, if two different cameras/senors are user to take a picture/video, they both leave unique noise only attributeable to the source camera.
 
 ## Motivation
-With the growing adoption of technology, the amount of media data that is shared and transferred between people, networks and devices has also notably increased. Once an image/video is shared, or transferred, it becomes very difficult to identify their source device where they must have been captured. This is a big problem in multimedia forensics, as it is often necessary to check for data tampering and other abuses like leaks of illegal images/videos. More especially as these media data usually undergo various forms and levels of compression when they are captured, uploaded and/or transferred from one device/network to the other.
+So far, existing literature identifies image compression as a significant attack to the PRNU-based attribution. However, this study examines if this degradation is consistent across all extraction filters and how much significant is a compression attack. We aim to determine if the loss of these "fingerprints" is a universal consequence of compression or if the residue retention is dependent on the specific compression scheme and filtering method employed to extract the scene information. With this work we hope to further highlight the ongoing relevance and reliability of PRNU-based identification methods in source camera identification, especially where appropriate removal of scene information is applied.
+
+This becomes necessary with the growing adoption of technology. Daily the amount of media data that is shared and transferred between people, networks and devices are rapidly increasing. Once an image/video is shared, or transferred, it becomes very difficult to identify their source device where they must have been captured. This is a big problem in multimedia forensics, as it is often necessary to check for data tampering and other abuses like leaks of illegal images/videos. More especially when these media data usually undergo various forms and levels of compression when they are captured, uploaded and/or transferred from one device/network to the other.
 
 ## Building the Camera Fingerprint or Residue
 
-To build the camera fingerprint or residue, the PRNU patterns from images from the camera is first extracted. This is done by filtering the individual images with a chosen filter. The filtered images are then subtracted from their original selves. The underdlying assumption is that the camera sensor leaves unique uncorrelated noise patterns on the images of scenes captured. Therefore by filtering, we isolate or extract these noise patterns from the actual scene information. And the weighted mean of these noise patterns from images of the same camera sensor approximates to the camera fingerprint or reference pattern unique only to that camera.
+To build the camera fingerprint or residue, the PRNU patterns from images from the camera is first extracted. This is done by filtering the individual images with a chosen filter. The filtered images are then subtracted from their original selves. The underdlying assumption is that the camera sensor leaves unique uncorrelated noise patterns on the images of scenes captured. Therefore by filtering, we isolate or extract these noise patterns from the actual scene information. This is such that the weighted mean of a large number of noise patterns from images of the same camera sensor approximates to the camera fingerprint or reference pattern unique only to that camera.
 
 ### Mathematical Formulation
 The extraction of the noise residue and the generation of the camera reference pattern are defined as follows:
@@ -37,7 +37,7 @@ For this project sigma and gaussian filters were chosen. These filters are state
 
 
 ## Data Outline
-Images used in this project were from the dataset used by Jianfeng Lu, Caijin Li, Xiangye Huang, Chen Cui, and Mahmoud Emam for their 2024 <a href="https://www.kaggle.com/datasets/mahmoudemam85/source-camera-identification-a-custom-dataset"> paper: "Source Camera Identification Algorithm Based On Multi-Scale Feature Fusion". </a>
+Images used in this project were from the dataset used by Jianfeng Lu, Caijin Li, Xiangye Huang, Chen Cui, and Mahmoud Emam for their 2024 paper:<a href="https://www.kaggle.com/datasets/mahmoudemam85/source-camera-identification-a-custom-dataset">"Source Camera Identification Algorithm Based On Multi-Scale Feature Fusion". </a>
 
 However, in order to avoid double compression, only images of the PNG formats were considered for the JPEG, JP2, JXR and JXL compression. The sizes of these selected images were about 20MB on the average before compression. And the target sizes for compression were 3MB, 500KB, and 100KB across the various schemes to give a uniform compression ratios of 7:1, 40:1, and 200:1 respectively.
 
@@ -45,7 +45,7 @@ A total of 80 images were sampled from 5 different cameras, labelled thus as D36
 
 ## Identifying Source Cameras
 
-To identify a source camera of an image, we simply compute the correlation used to match reference pattern noise from selected camera. The camera with the highest correlation value confirms the source match. to optimise for speed, the fast normalised correlation was used for matching the images to their computed reference patterns.
+To identify the source camera of an image, we simply compute the correlation used to match reference pattern of a selected camera computed above with PRNU pattern extracted from the image. The camera with the highest correlation value confirms the source match. But to optimise for speed in our case, we used the fast normalised correlation for matching the extracted PRNU to the computed reference patterns of selected cameras.
 
 ## Analysis and Results
 
@@ -71,34 +71,19 @@ To identify a source camera of an image, we simply compute the correlation used 
 ### Quality Metrics
 <img src="img/image-r5.png" alt="Correlation values for sigma" width="600"> 
 
-
-In addition to forensic performance, we computed different quality metrics (the  PSNR and SSIM, for reference quality metrics and then BRISQUE, for the no reference quality metrics) to better understand the relationship between visual fidelity and camera fingerprint preservation. We observed that classification accuracy reduced as images were progressively degraded for gaussian filter, while the results from sigma filter remained stable and even showed that as more scene information was removed due to compression, the correlation of the pattern noise to the reference pattern for each device improved across all standards.
-
-
-## Result Analysis
+### Result Analysis
 Robustness of Sigma Filter:
-* The Sigma filter consistently yielded high correlation values and 100% SCI accuracy across all tested compression formats and target sizes- even at extreme compression levels (e.g., 100KB). This demonstrates the Sigma filter strength in preserving fine sensor noise patterns critical for reliable fingerprint extraction.
+* As seen from the results, the matching accuracy for source identification with the sigma filter remains stable across different compression ratios and schemes. In fact, at higher compression ratios, we start to see an increase in correlation values used for matching the right camera. This is consistent with theory, as compression tends to remove scene information. But the increase in correlation values also suggests that the more the scene is progressively removed by compression, what is left afterwards becomes a close approximation of the residue or sensor noise.
+* It is established that compression algorithms like JPEG exploit the redundancy for data reduction. From the sample compressed with JPEG attached above, we can notice the blocky artifacts start to appear in low-frequency, uniform regions of the image as they are aggressively compressed, while still preserving the high-frequency, edge structure. So the suppression of high frequencies during compression is not the entire reason why SCI systems fail under compression attacks. This is because sigma filter by its very nature capture non linear high frequency noise. A purely low-pass effect from compression would reduce its robustness instead of improving it, as we have seen. 
 
 Limitations of Gaussian Filter:
-* While the Gaussian filter achieved perfect identification under mild compression (3MB), its accuracy sharply declined under stronger compression. This was consistent with reduction in quality of the compressed images. In some cases (e.g., JP2 or JXL at 100KB), accuracy dropped below 50%, and correlation scores were notably low. This emphasizes its reduced effectiveness in challenging conditions, due to uniform smoothing which may suppress PRNU traces.
+* While the Gaussian filter achieved good source identification under mild compression (3MB), its accuracy sharply declines under stronger compression. This was consistent with reduction in the quality of the compressed images. In some cases (e.g., JP2 or JXL at 100KB), accuracy dropped below 50%. This is even when the correlation values improved mildly with agressive compression, suggesting that while what is left after compression is closer to the reference pattern, this does not neccessarily improve the matching accuracy. Which futher buttresses the fact that compression in itself does not suppress the PRNU pattern. 
+* Instead the drop in accuracy could be attributed to the strength of smoothing from gaussian filtering. The filter allows a lot of scene information to contaminate the PRNU pattern during. And the more the scene is removed during compression and replaced with compression artifacts as we can see in our compressed images, the filter start to capture the more of these artifacts from the scene. This explains the accuracy not improving with mild increase in correlation. In this case correlation is on compression artifacts and not on PRNU pattern. 
+Quality Metrics of Compressed Images:
+In addition to forensic performance, we computed different quality metrics (the  PSNR and SSIM, for reference quality metrics and then BRISQUE, for the no reference quality metrics) to better understand the relationship between visual fidelity and camera fingerprint preservation. We observed that classification accuracy reduced as images were progressively degraded for gaussian filter, while the results from sigma filter remained stable. This is even for JPEG compression, which provided the worst quality results across the three metrics and levels of compression.
+### Conclusion
+So from our results we can reliably conclude that while correlation values increased as images degraded, the matching accuracy remained stable across different compression levels on sigma filter. This was not the same for gaussian filter as results degraded with the quality of the images. This consolidates our suspicion that the effectiveness of a compression attack on SCI based on PRNU patterns are largely dependent on the choice of filter, and less on the compression strength or scheme for that matter.
 
-Compression Standard Comparison:
-* JPEG and JXR showed better performance under the Gaussian filter with mild compression (unlike JP2 and JXL), but failed as compression progressed.
-* All standards showed robustness under Sigma filter filtering, both in accuracy and high correlation values.
-
-Correlation Trends:
-* Under mild or no compression at all, PRNU results from gaussian filter maintained low correlation values yet accurate predictions, highlighting that correlation magnitude alone is not always a reliable indicator unless the pattern noise of the source camera is well-preserved.
-* In contrast, Sigma filtering maintained both high correlation and stable classification, making it more dependable even for very poor quality images.
-
-## How It Works
-Training Phase:
-* Extracts PRNU noise from each image.
-* Computes an average noise fingerprint for each camera.
-  
-Testing Phase:
-* Extracts noise from a test image.
-* Compares it against each camera fingerprint using normalized cross-correlation.
-* Selects the camera with the highest similarity score.
 
 ## References
 1. M. S. Behare, A. S. Bhalchandra, and R. Kumar, "Source Camera Identification using Photo Response Noise Uniformity," in Proc. 3rd Int. Conf. on Electronics Communication and Aerospace Technology (ICECA), Coimbatore, India, Jun. 2019.
