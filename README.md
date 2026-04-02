@@ -111,10 +111,14 @@ python prnu.py --input data/train
 python analysis.py 
 
 #### Expected Structure
-data/
-  train/
-  test/
-src/
+```
+project_root/
+├── data/
+│   ├── train/
+│   └── test/
+├── src_code/
+└── README.md
+```
 
 
 ## References
